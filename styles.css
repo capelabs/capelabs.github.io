@@ -109,7 +109,7 @@ body {
     display: flex;
     list-style: none;
     gap: 2rem;
-    overflow: visible; /* ✨ 데스크탑에서는 스크롤이 안 보이게 설정 */
+    overflow: visible; /* 데스크탑에서는 스크롤이 안 보이게 설정 */
 }
 
 .nav-item {
