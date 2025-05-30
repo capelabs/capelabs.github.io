@@ -5,6 +5,13 @@ function toggleMobileMenu() {
     
     navMenu.classList.toggle('active');
     mobileToggle.classList.toggle('active');
+
+     // 스크롤 제어 추가
+    if (navMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';  // 스크롤 막기
+    } else {
+        document.body.style.overflow = '';        // 스크롤 복원
+    }
 }
 
 // Smooth scrolling for navigation links
@@ -23,6 +30,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const mobileToggle = document.querySelector('.mobile-toggle');
             navMenu.classList.remove('active');
             mobileToggle.classList.remove('active');
+
+            document.body.style.overflow = '';
         }
     });
 });
@@ -182,6 +191,7 @@ document.addEventListener('click', function(e) {
     if (!navContainer.contains(e.target) && navMenu.classList.contains('active')) {
         navMenu.classList.remove('active');
         mobileToggle.classList.remove('active');
+        document.body.style.overflow = ''; // 스크롤 복원
     }
 });
 
