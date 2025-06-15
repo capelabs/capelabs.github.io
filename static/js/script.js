@@ -156,8 +156,9 @@ function initBrevityPage() {
             const emailInput = document.getElementById('emailInput');
             const tosCheckbox = document.getElementById('tosCheckbox');
             const ppCheckbox = document.getElementById('ppCheckbox');
+            const subscribeBtn = document.getElementById('subscribeBtn');
             
-            if (!emailInput || !tosCheckbox || !ppCheckbox) return;
+            if (!emailInput || !tosCheckbox || !ppCheckbox || !subscribeBtn) return;
             
             const email = emailInput.value.trim();
 
@@ -186,14 +187,62 @@ function initBrevityPage() {
                 return;
             }
 
-            // 성공적인 구독
-            showBrevityAlert('success', 'Subscription Confirmed', 'Welcome to Brevity intelligence network. Daily briefings will commence within 24 hours.');
+            // 버튼 비활성화 및 로딩 상태
+            subscribeBtn.disabled = true;
+            const originalText = subscribeBtn.textContent;
+            subscribeBtn.textContent = 'Processing...';
+
+            // API 요청
+            const apiUrl = 'https://api.thecapelabs.com/brevity/v1.0/0c492e35-d082-41ef-9bf7-ae20f9b61151';
             
-            // 폼 초기화
-            emailInput.value = '';
-            tosCheckbox.checked = false;
-            ppCheckbox.checked = false;
-            checkFormValidity();
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email
+                })
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    // 성공적인 구독
+                    showBrevityAlert('success', 'Subscription Confirmed', 'Welcome to Brevity intelligence network. Daily briefings will commence within 24 hours.');
+                    
+                    // 폼 초기화
+                    emailInput.value = '';
+                    tosCheckbox.checked = false;
+                    ppCheckbox.checked = false;
+                    checkFormValidity();
+                } else {
+                    // HTTP 상태 코드가 200이 아닌 경우
+                    throw new Error(`Server responded with status ${response.status}`);
+                }
+            })
+            .catch(error => {
+                console.error('Subscription error:', error);
+                
+                // 네트워크 오류 또는 기타 오류 처리
+                if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                    // 네트워크 연결 오류
+                    showBrevityAlert('error', 'Network Error', 'Unable to connect to the server. Please check your internet connection and try again.');
+                } else if (error.message.includes('status 4')) {
+                    // 4xx 클라이언트 오류
+                    showBrevityAlert('error', 'Request Error', 'Invalid request. Please verify your email address and try again.');
+                } else if (error.message.includes('status 5')) {
+                    // 5xx 서버 오류
+                    showBrevityAlert('error', 'Server Error', 'Server is temporarily unavailable. Please try again in a few minutes.');
+                } else {
+                    // 기타 오류
+                    showBrevityAlert('error', 'Subscription Error', 'An unexpected error occurred. Please try again later.');
+                }
+            })
+            .finally(() => {
+                // 버튼 상태 복원
+                subscribeBtn.disabled = false;
+                subscribeBtn.textContent = originalText;
+                checkFormValidity(); // 폼 상태에 따라 버튼 활성화 여부 재확인
+            });
         });
     }
 
