@@ -1,6 +1,36 @@
 // ==================== BREVITY PAGE FUNCTIONS ====================
 // 기존 script.js 파일의 맨 아래에 추가할 코드
 
+// Mobile menu toggle function for Brevity page
+function toggleMobileMenu() {
+    const navMenu = document.getElementById('navMenu');
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const body = document.body;
+    
+    if (navMenu && mobileToggle) {
+        navMenu.classList.toggle('active');
+        mobileToggle.classList.toggle('active');
+
+        // Brevity 페이지에서는 추가 클래스로 컨텐츠 고정
+        if (isBrevityPage()) {
+            if (navMenu.classList.contains('active')) {
+                body.classList.add('menu-open');
+                body.style.overflow = 'hidden';
+            } else {
+                body.classList.remove('menu-open');
+                body.style.overflow = '';
+            }
+        } else {
+            // 기존 메인 페이지 로직
+            if (navMenu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
+        }
+    }
+}
+
 // Brevity 페이지인지 확인하는 함수
 function isBrevityPage() {
     return document.body.classList.contains('brevity-page');
@@ -109,6 +139,49 @@ function initBrevityPage() {
 
     // Matrix 배경 초기화
     createBrevityMatrixBackground();
+
+    // 모바일 메뉴 외부 클릭 시 닫기
+    document.addEventListener('click', function(e) {
+        const navMenu = document.getElementById('navMenu');
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navContainer = document.querySelector('.nav-container');
+        const body = document.body;
+        
+        if (navContainer && !navContainer.contains(e.target) && navMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            if (mobileToggle) {
+                mobileToggle.classList.remove('active');
+            }
+            
+            // Brevity 페이지에서 클래스 제거
+            if (isBrevityPage()) {
+                body.classList.remove('menu-open');
+            }
+            body.style.overflow = ''; // 스크롤 복원
+        }
+    });
+
+    // 네비게이션 링크 클릭 시 모바일 메뉴 닫기
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const body = document.body;
+            
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                if (mobileToggle) {
+                    mobileToggle.classList.remove('active');
+                }
+                
+                // Brevity 페이지에서 클래스 제거
+                if (isBrevityPage()) {
+                    body.classList.remove('menu-open');
+                }
+                body.style.overflow = ''; // 스크롤 복원
+            }
+        });
+    });
 
     // 버튼 활성화 상태 체크 함수
     function checkFormValidity() {

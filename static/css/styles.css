@@ -1,4 +1,14 @@
-/* ==================== GLOBAL COLOR SYSTEM ==================== */
+/* Brevity 페이지에서 모바일 메뉴 열릴 때 컨텐츠 고정 */
+.brevity-page.menu-open {
+    overflow: hidden;
+}
+
+.brevity-page.menu-open .main-content {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}/* ==================== GLOBAL COLOR SYSTEM ==================== */
 :root {
     /* Primary Brand Colors */
     --primary-blue: #8cbec3;
@@ -1034,6 +1044,46 @@ body {
     
     .brevity-page .alert-modal {
         padding: 2rem 1.5rem;
+    }
+    
+    /* Brevity 페이지의 모바일 네비게이션 z-index 수정 */
+    .brevity-page .nav-menu {
+        z-index: 1002 !important; /* 모든 콘텐츠보다 위에 */
+    }
+    
+    .brevity-page .header {
+        z-index: 1003 !important; /* 헤더가 가장 위에 */
+    }
+    
+    /* 메인 콘텐츠의 z-index는 낮게 유지 */
+    .brevity-page .main-content {
+        position: relative;
+        z-index: 1; /* 낮은 값으로 설정 */
+    }
+    
+    /* Matrix 배경도 z-index 조정 */
+    .brevity-page .matrix-bg {
+        z-index: -1;
+    }
+    
+    /* 모바일 메뉴가 활성화되지 않았을 때는 pointer-events 비활성화 */
+    .brevity-page .nav-menu:not(.active) {
+        pointer-events: none;
+    }
+    
+    .brevity-page .nav-menu.active {
+        pointer-events: auto;
+    }
+    
+    /* 구독 카드의 z-index도 낮게 설정 */
+    .brevity-page .subscription-card {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* 알림 모달은 모든 것보다 위에 */
+    .brevity-page .alert-overlay {
+        z-index: 1004 !important;
     }
 }
 
