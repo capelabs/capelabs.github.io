@@ -620,3 +620,439 @@ body {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
 }
+
+/* ==================== BREVITY PAGE STYLES ==================== */
+/* Brevity 페이지에서만 적용되는 스타일 */
+
+/* Brevity 페이지의 body 스타일 재정의 */
+.brevity-page {
+    overflow-x: hidden;
+}
+
+/* Matrix background effect */
+.brevity-page .matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.05;
+}
+
+/* Brevity main container - 기존 .container와 다른 레이아웃 */
+.brevity-page .main-content .container {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    max-width: none;
+    margin-top: 0;
+}
+
+/* Brevity subscription card */
+.brevity-page .subscription-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    padding: 4rem 3rem;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.brevity-page .subscription-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--hover-overlay), transparent);
+    animation: brevity-scan 3s infinite;
+}
+
+.brevity-page .subscription-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 30px var(--hover-overlay);
+}
+
+@keyframes brevity-scan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Brevity logo section */
+.brevity-page .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+    gap: 1.5rem; /* 전체 요소들 사이의 기본 간격 */
+}
+
+.brevity-page .logo-image {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem; /* 로고와 구분선 사이 간격 조정 */
+}
+
+.brevity-page .logo-image:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px var(--focus-glow));
+}
+
+.brevity-page .logo-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border-primary);
+    margin: 0; /* 구분선 자체의 마진 제거 */
+}
+
+.brevity-page .logo-text {
+    font-family: 'Courier New', monospace;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--focus-glow);
+    margin-left: 0.5rem; /* 구분선과 텍스트 사이 간격 조정 */
+}
+
+/* Brevity hero content */
+.brevity-page .hero-content {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.brevity-page .hero-title {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.brevity-page .hero-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* Brevity subscription form */
+.brevity-page .subscription-form {
+    position: relative;
+    z-index: 1;
+}
+
+.brevity-page .form-group {
+    margin-bottom: 1rem; /* 2rem에서 1rem으로 줄임 */
+}
+
+/* Checkbox Group Styles */
+.brevity-page .checkbox-group {
+    margin-bottom: 2rem;
+    padding: 0.5rem 0; /* 1rem에서 0.5rem으로 줄임 */
+}
+
+.brevity-page .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    gap: 0.75rem;
+}
+
+.brevity-page .checkbox-item:last-child {
+    margin-bottom: 0;
+}
+
+.brevity-page .custom-checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border-primary);
+    background: var(--bg-primary);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.3s ease;
+}
+
+.brevity-page .custom-checkbox:hover {
+    border-color: var(--primary-blue);
+}
+
+.brevity-page .custom-checkbox:checked {
+    background: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.brevity-page .custom-checkbox:checked::before {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--bg-primary);
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.brevity-page .checkbox-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    user-select: none;
+}
+
+.brevity-page .terms-link {
+    color: var(--primary-blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.brevity-page .terms-link:hover {
+    border-bottom-color: var(--primary-blue);
+    text-shadow: 0 0 5px var(--focus-glow);
+}
+
+.brevity-page .email-input {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+.brevity-page .email-input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.brevity-page .email-input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px var(--focus-glow);
+    background: var(--bg-secondary);
+}
+
+.brevity-page .subscribe-btn {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--primary-blue);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brevity-page .subscribe-btn:disabled {
+    color: var(--text-muted);
+    border-color: var(--border-primary);
+    cursor: not-allowed;
+    background: var(--bg-secondary);
+    opacity: 0.6;
+}
+
+.brevity-page .subscribe-btn:not(:disabled):hover {
+    color: var(--bg-primary);
+    background: var(--primary-blue);
+    box-shadow: 0 0 20px var(--focus-glow);
+    transform: translateY(-2px);
+}
+
+.brevity-page .subscribe-btn:not(:disabled):active {
+    transform: translateY(0);
+}
+
+/* Brevity footer text */
+.brevity-page .footer-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 2rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* Brevity custom alert modal */
+.brevity-page .alert-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.brevity-page .alert-modal {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    padding: 3rem 2.5rem;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.brevity-page .alert-overlay.show {
+    display: flex;
+}
+
+.brevity-page .alert-overlay.show .alert-modal {
+    transform: scale(1);
+}
+
+.brevity-page .alert-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-red), var(--primary-blue), var(--accent-cyan));
+}
+
+.brevity-page .alert-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.brevity-page .alert-icon.success {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.brevity-page .alert-icon.error {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+.brevity-page .alert-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.brevity-page .alert-message {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.brevity-page .alert-btn {
+    padding: 0.8rem 2rem;
+    font-size: 0.9rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 1px solid var(--primary-blue);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.brevity-page .alert-btn:hover {
+    background: var(--primary-blue);
+    color: var(--bg-primary);
+    box-shadow: 0 0 15px var(--focus-glow);
+}
+
+/* Brevity responsive styles */
+@media (max-width: 768px) {
+    .brevity-page .main-content .container {
+        padding: 1rem;
+    }
+    
+    .brevity-page .subscription-card {
+        padding: 3rem 2rem;
+    }
+    
+    .brevity-page .logo-text {
+        font-size: 1.5rem;
+    }
+    
+    .brevity-page .logo-image {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .brevity-page .hero-title {
+        font-size: 1.3rem;
+    }
+    
+    .brevity-page .alert-modal {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .brevity-page .logo-section {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .brevity-page .logo-divider {
+        width: 30px;
+        height: 1px;
+    }
+    
+    .brevity-page .hero-title {
+        font-size: 1.1rem;
+    }
+    
+    .brevity-page .hero-subtitle {
+        font-size: 0.9rem;
+    }
+}
