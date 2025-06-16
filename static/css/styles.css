@@ -386,6 +386,38 @@ body {
     font-size: 0.95rem;
 }
 
+/* Feature Card Ghost Button */
+.feature-btn {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.5rem 0;
+    background: transparent;
+    color: var(--primary-blue);
+    text-decoration: none;
+    border: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    border-bottom: 1px solid transparent;
+    float: right; /* 우측 배치 */
+    clear: both; /* 다른 float 요소들과 겹치지 않도록 */
+}
+
+.feature-btn:hover {
+    color: var(--primary-blue-hover);
+    text-shadow: 0 0 8px var(--focus-glow);
+    border-bottom-color: var(--primary-blue);
+    transform: translateY(-1px);
+}
+
+.feature-btn:active {
+    transform: translateY(0);
+}
+
 /* Code Block */
 .code-block {
     background: var(--bg-primary);
