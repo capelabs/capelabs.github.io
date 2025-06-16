@@ -8,124 +8,76 @@
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body class="brevity-page">
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav-container">
-            <a href="../" class="logo">CapeLabs</a>
-            <div class="mobile-toggle" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-    </main>
-            <ul class="nav-menu" id="navMenu">
-                <li class="nav-item">
-                    <a href="../#services" class="nav-link">Services</a>
-                    <div class="dropdown">
-                        <div class="dropdown-section">
-                            <div class="dropdown-item">
-                                <a href="../#services" class="dropdown-link">ThreatMesh</a>
-                                <div class="dropdown-description">Real-time threat analytics</div>
-                            </div>
-                            <div class="dropdown-item">
-                                <a href="./" class="dropdown-link">Brevity</a>
-                                <div class="dropdown-description">Daily security briefings</div>
-                            </div>
-                            <div class="dropdown-item">
-                                <a href="../#services" class="dropdown-link">Certmind</a>
-                                <div class="dropdown-description">Currently in development</div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="../#training" class="nav-link">Training</a>
-                    <div class="dropdown">
-                        <div class="dropdown-section">
-                            <div class="dropdown-item">
-                                <a href="../#osint" class="dropdown-link">OSINT</a>
-                                <div class="dropdown-description">Open-source data analysis</div>
-                            </div>
-                            <div class="dropdown-item">
-                                <a href="../#malware" class="dropdown-link">Malware Analysis</a>
-                                <div class="dropdown-description">Sandbox-based threat study</div>
-                            </div>
-                            <div class="dropdown-item">
-                                <a href="../#cti" class="dropdown-link">Cyber Threat Intelligence</a>
-                                <div class="dropdown-description">Adversary behavior insights</div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a href="../#about" class="nav-link">About</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
 
     <canvas class="matrix-bg"></canvas>
+    
     <!-- Main Content -->
     <main class="main-content">
         <div class="container">
-        <div class="subscription-card">
-            <!-- Logo Section -->
-            <div class="logo-section">
-                <img src="../static/img/favicon.png" alt="CapeLabs Logo" class="logo-image">
-                <div class="logo-divider"></div>
-                <div class="logo-text">Brevity</div>
-            </div>
-            
-            <!-- Hero Content -->
-            <div class="hero-content">
-                <h1 class="hero-title">Daily AI-Curated Cybersecurity Briefings</h1>
-                <p class="hero-subtitle">
-                    Concise, high-signal updates crafted for professionals who can't afford to miss what matters. 
-                    Join the elite network of security experts staying ahead of the threat landscape.
-                </p>
-            </div>
-            
-            <!-- Subscription Form -->
-            <form class="subscription-form" id="subscriptionForm">
-                <div class="form-group">
-                    <input 
-                        type="email" 
-                        class="email-input" 
-                        id="emailInput"
-                        placeholder="security.professional@company.com"
-                        required
-                    >
+            <div class="subscription-card">
+                <!-- Logo Section -->
+                <div class="logo-section">
+                    <img src="../static/img/favicon.png" alt="CapeLabs Logo" class="logo-image">
+                    <div class="logo-divider"></div>
+                    <div class="logo-text">Brevity</div>
                 </div>
                 
-                <!-- Terms and Privacy Checkbox Group -->
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="tosCheckbox" class="custom-checkbox" required>
-                        <label for="tosCheckbox" class="checkbox-label">
-                            I agree to the <a href="./tos.html" target="_blank" class="terms-link">Terms of Service</a>
-                        </label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="ppCheckbox" class="custom-checkbox" required>
-                        <label for="ppCheckbox" class="checkbox-label">
-                            I agree to the <a href="./pp.html" target="_blank" class="terms-link">Privacy Policy</a>
-                        </label>
-                    </div>
+                <!-- Hero Content -->
+                <div class="hero-content">
+                    <h1 class="hero-title">Daily AI-Curated Cybersecurity Briefings</h1>
+                    <p class="hero-subtitle">
+                        Concise, high-signal updates crafted for professionals who can't afford to miss what matters. 
+                        Join the elite network of security experts staying ahead of the threat landscape.
+                    </p>
                 </div>
                 
-                <button type="submit" class="subscribe-btn" id="subscribeBtn" disabled>
-                    Subscribe
-                </button>
-            </form>
-            
-            <!-- Footer Text -->
-            <div class="footer-text">
-                <strong>System Status:</strong> <span class="blink" style="color: var(--primary-blue);">OPERATIONAL</span><br>
-                Secure delivery via encrypted channels. Unsubscribe protocols available 24/7.<br>
-                By subscribing, you acknowledge receipt of classified threat intelligence updates.
+                <!-- Subscription Form -->
+                <form class="subscription-form" id="subscriptionForm">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            class="email-input" 
+                            id="emailInput"
+                            placeholder="your@company.com"
+                            required
+                        >
+                    </div>
+                    
+                    <!-- Terms and Privacy Checkbox Group -->
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tosCheckbox" class="custom-checkbox" required>
+                            <label for="tosCheckbox" class="checkbox-label">
+                                I agree to the <a href="./tos.html" target="_blank" class="terms-link">Terms of Service</a>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ppCheckbox" class="custom-checkbox" required>
+                            <label for="ppCheckbox" class="checkbox-label">
+                                I agree to the <a href="./pp.html" target="_blank" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="subscribe-btn" id="subscribeBtn" disabled>
+                        Subscribe
+                    </button>
+                </form>
+                
+                <!-- Footer Text -->
+                <div class="footer-text">
+                    <strong>System Status:</strong> <span class="blink" style="color: var(--primary-blue);">OPERATIONAL</span><br>
+                    Secure delivery via encrypted channels. Unsubscribe protocols available 24/7.<br>
+                    By subscribing, you acknowledge receipt of classified threat intelligence updates.
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
 
     <!-- Custom Alert Modal -->
     <div class="alert-overlay" id="alertOverlay">
@@ -139,6 +91,9 @@
         </div>
     </div>
 
+    <!-- Load Components First -->
+    <script src="../static/js/components.js"></script>
+    <!-- Then Load Main Script -->
     <script src="../static/js/script.js"></script>
 </body>
 </html>
