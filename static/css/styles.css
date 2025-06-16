@@ -553,12 +553,19 @@ body {
         max-height: 80vh;
         overflow-y: auto;
         overscroll-behavior: contain;
+        z-index: 1002 !important; /* 모든 페이지에서 최상단 */
     }
 
     .nav-menu.active {
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+        pointer-events: auto; /* 활성화된 상태에서만 클릭 가능 */
+    }
+
+    /* 비활성화된 상태에서는 클릭 이벤트 차단 */
+    .nav-menu:not(.active) {
+        pointer-events: none;
     }
 
     .nav-item {
@@ -625,6 +632,17 @@ body {
     .logo::before {
         width: 28px;
         height: 28px;
+    }
+
+    /* 헤더가 모바일 메뉴보다 위에 오도록 */
+    .header {
+        z-index: 1003 !important;
+    }
+
+    /* 메인 콘텐츠는 낮은 z-index */
+    .main-content {
+        position: relative;
+        z-index: 1;
     }
 }
 
