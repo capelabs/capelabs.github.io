@@ -1200,3 +1200,8 @@ body {
         font-size: 0.9rem;
     }
 }
+
+/* Headless 페이지용 클래스 추가 */
+.headless-page .main-content {
+    margin-top: 0;
+}
