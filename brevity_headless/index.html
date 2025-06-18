@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brevity - CapeLabs Research Group</title>
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body class="brevity-page">    
+
+    <canvas class="matrix-bg"></canvas>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="subscription-card">
+                <!-- Logo Section -->
+                <div class="logo-section">
+                    <img src="../static/img/favicon.png" alt="CapeLabs Logo" class="logo-image">
+                    <div class="logo-divider"></div>
+                    <div class="logo-text">Brevity</div>
+                </div>
+                
+                <!-- Hero Content -->
+                <div class="hero-content">
+                    <h1 class="hero-title">Daily AI-Curated Cybersecurity Briefings</h1>
+                    <p class="hero-subtitle">
+                        Concise, high-signal updates crafted for professionals who can't afford to miss what matters. 
+                        Join the elite network of security experts staying ahead of the threat landscape.
+                    </p>
+                </div>
+                
+                <!-- Subscription Form -->
+                <form class="subscription-form" id="subscriptionForm">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            class="email-input" 
+                            id="emailInput"
+                            placeholder="your@company.com"
+                            required
+                        >
+                    </div>
+                    
+                    <!-- Terms and Privacy Checkbox Group -->
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tosCheckbox" class="custom-checkbox" required>
+                            <label for="tosCheckbox" class="checkbox-label">
+                                I agree to the <a href="./tos.html" target="_blank" class="terms-link">Terms of Service</a>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ppCheckbox" class="custom-checkbox" required>
+                            <label for="ppCheckbox" class="checkbox-label">
+                                I agree to the <a href="./pp.html" target="_blank" class="terms-link">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="subscribe-btn" id="subscribeBtn" disabled>
+                        Subscribe
+                    </button>
+                </form>
+                
+                <!-- Footer Text -->
+                <div class="footer-text">
+                    <strong>System Status:</strong> <span class="blink" style="color: var(--primary-blue);">OPERATIONAL</span><br>
+                    Secure delivery via encrypted channels are available 24/7.<br>
+                    By subscribing, you acknowledge receipt of classified threat intelligence updates.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Custom Alert Modal -->
+    <div class="alert-overlay" id="alertOverlay">
+        <div class="alert-modal">
+            <div class="alert-icon" id="alertIcon">
+                <span id="alertIconSymbol">✓</span>
+            </div>
+            <h3 class="alert-title" id="alertTitle">System Response</h3>
+            <p class="alert-message" id="alertMessage">Operation completed successfully.</p>
+            <button class="alert-btn" onclick="closeAlert()">Acknowledge</button>
+        </div>
+    </div>
+
+    <!-- Load Components First -->
+    <script src="../static/js/components.js"></script>
+    <!-- Then Load Main Script -->
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
