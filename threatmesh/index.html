@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreatMesh - Open Threat Intelligence Feed | CapeLabs</title>
+    <link rel="icon" type="image/png" href="../static/img/favicon.png">
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <style>
+        /* ThreatMesh specific styles */
+        .threatmesh-hero {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border: 1px solid var(--border-primary);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .threatmesh-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--hover-overlay), transparent);
+            animation: scan 3s infinite;
+        }
+
+        /* Logo section similar to Brevity */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            gap: 1.5rem;
+        }
+
+        .logo-image {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-blue);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .logo-image:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px var(--focus-glow));
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--border-primary);
+        }
+
+        .logo-text {
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--focus-glow);
+        }
+
+        .threatmesh-hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-family: 'Courier New', monospace;
+            display: block;
+        }
+
+        .hero-stat .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .feature-section {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-primary);
+            padding: 3rem 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .feature-section h2 {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        .feature-section h2::before {
+            content: '> ';
+            color: var(--accent-red);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-primary);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), var(--primary-blue), var(--accent-cyan));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-item:hover {
+            border-color: var(--primary-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .feature-item h3 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        .feature-item p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            background: var(--bg-primary);
+            border: 2px solid var(--primary-blue);
+            padding: 3rem 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), var(--primary-blue), var(--accent-cyan));
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--bg-primary);
+            border-color: var(--primary-blue);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-blue-hover);
+            box-shadow: 0 0 20px var(--focus-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-blue);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary.disabled {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            border-color: var(--border-secondary);
+            cursor: not-allowed;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .btn-secondary.disabled:hover {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-primary);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .info-card .icon {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .disclaimer {
+            background: var(--bg-tertiary);
+            border-left: 4px solid var(--accent-red);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .disclaimer h3 {
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .logo-section {
+                gap: 0.75rem;
+            }
+
+            .logo-image {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+
+            .logo-divider {
+                height: 30px;
+            }
+
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .cta-section {
+                margin: 1.5rem 0;
+                padding: 2.5rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Placeholder -->
+    <div id="header-placeholder"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="threatmesh-hero">
+                <!-- Logo Section -->
+                <div class="logo-section">
+                    <img src="../static/img/favicon.png" alt="CapeLabs Logo" class="logo-image">
+                    <div class="logo-divider"></div>
+                    <div class="logo-text">ThreatMesh</div>
+                </div>
+                
+                <p class="subtitle">Open Threat Intelligence Feed providing daily lists of verified attacker IP addresses detected worldwide</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="number">Daily</span>
+                        <span class="label">Updates</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="number">7 Days</span>
+                        <span class="label">Freshness</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="number">Global</span>
+                        <span class="label">Coverage</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.4rem;">Ready to Enhance Your Threat Intelligence?</h2>
+                <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem;">Get access to our daily updated threat feed and strengthen your security posture.</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://github.com/capelabs/threatmesh-feed" class="btn-primary" target="_blank" rel="noopener noreferrer">
+                        View on GitHub >>
+                    </a>
+                    <a href="#" class="btn-secondary disabled">
+                        Official Website >>
+                    </a>
+                </div>
+            </section>
+
+            <!-- What is ThreatMesh -->
+            <section class="feature-section">
+                <h2>What is ThreatMesh?</h2>
+                <p>ThreatMesh provides a curated feed of attacker IP addresses detected through our globally distributed network of attack detection sensors. Each IP address in our feed has been involved in verified attacks or scanning activity within the last 7 days, ensuring high relevance and up-to-date threat intelligence.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="icon">🕛</div>
+                        <h3>12:30 AM UTC</h3>
+                        <p>Daily automated updates with the latest threat data</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">🌐</div>
+                        <h3>Global Sensors</h3>
+                        <p>Distributed network capturing real-world malicious activities</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="icon">⚡</div>
+                        <h3>7-Day Fresh</h3>
+                        <p>Only IPs with recent attack or scanning activity</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use Cases -->
+            <section class="feature-section">
+                <h2>Use Cases</h2>
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Firewall Automation</h3>
+                        <p>Automatically update firewall blocklists with the latest threat intelligence to prevent known malicious IPs from accessing your infrastructure.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔍</div>
+                        <h3>SIEM/EDR Enhancement</h3>
+                        <p>Enrich your SIEM and EDR threat detection rules with fresh IOCs to improve detection accuracy and reduce false positives.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h3>IOC Analysis</h3>
+                        <p>Perform Indicator of Compromise analysis using verified threat intelligence to understand attack patterns and origins.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Disclaimer -->
+            <section class="disclaimer">
+                <h3>⚠️ Important Disclaimer</h3>
+                <p>While ThreatMesh provides IPs with a high likelihood of malicious behavior, we do not guarantee 100% accuracy for every environment. Please evaluate and test before deploying in production to avoid false positives or disruption. The IPs listed are limited to those seen actively scanning or attacking within the last 7 days.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Load Components -->
+    <script src="../static/js/components.js"></script>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
