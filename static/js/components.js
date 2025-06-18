@@ -1,12 +1,23 @@
 // ==================== COMPONENT LOADER ====================
 
-// 현재 페이지의 기본 경로를 확인하는 함수
+// 현재 페이지의 기본 경로를 확인하는 함수 (범용적)
 function getBasePath() {
     const path = window.location.pathname;
-    if (path.includes('/brevity/')) {
-        return '../static/components/';
+    
+    // 경로의 깊이를 계산 (루트에서 몇 단계 깊은지)
+    const pathSegments = path.split('/').filter(segment => segment && segment !== 'index.html');
+    
+    // 루트 페이지 (/index.html 또는 /)
+    if (pathSegments.length === 0) {
+        return 'static/components/';
     }
-    return 'static/components/';
+    
+    // 서브 디렉터리 페이지 (/brevity/, /threatmesh/, /certmind/ 등)
+    // 한 단계 깊으면 '../' 사용
+    const depth = pathSegments.length;
+    const prefix = '../'.repeat(depth);
+    
+    return `${prefix}static/components/`;
 }
 
 // 컴포넌트를 로딩하는 함수

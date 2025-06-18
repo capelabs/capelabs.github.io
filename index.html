@@ -6,6 +6,81 @@
     <title>CapeLabs Research Group</title>
     <link rel="icon" type="image/png" href="static/img/favicon.png">
     <link rel="stylesheet" href="static/css/styles.css">
+    <style>
+        /* Feature card alignment for consistent button positioning */
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px; /* Ensures consistent card height */
+        }
+
+        .feature-card-content {
+            flex-grow: 1;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            color: var(--primary-blue);
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        /* Feature Card Ghost Button - positioned at bottom */
+        .feature-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.5rem 0;
+            background: transparent;
+            color: var(--primary-blue);
+            text-decoration: none;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            border-bottom: 1px solid transparent;
+            align-self: flex-end; /* Right align the button */
+            flex-shrink: 0; /* Prevent button from shrinking */
+        }
+
+        .feature-btn:hover {
+            color: var(--primary-blue-hover);
+            text-shadow: 0 0 8px var(--focus-glow);
+            border-bottom-color: var(--primary-blue);
+            transform: translateY(-1px);
+        }
+
+        .feature-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Ensure cards without buttons have consistent spacing */
+        .feature-card:not(:has(.feature-btn)) {
+            min-height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .feature-card {
+                min-height: auto; /* Remove fixed height on mobile for better flow */
+            }
+            
+            .feature-btn {
+                align-self: flex-end; /* Keep right alignment on mobile */
+                margin-top: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header Placeholder -->
@@ -34,17 +109,24 @@
                 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3>ThreatMesh</h3>
-                        <p>ThreatMesh is an integrated threat intelligence engine that connects malicious IPs, scripts, and open-source signals into a unified mesh for real-time detection and context-rich analysis.</p>
+                        <div class="feature-card-content">
+                            <h3>ThreatMesh</h3>
+                            <p>ThreatMesh is an integrated threat intelligence engine that connects malicious IPs, scripts, and open-source signals into a unified mesh for real-time detection and context-rich analysis.</p>
+                        </div>
+                        <a href="threatmesh/" class="feature-btn">Learn More >></a>
                     </div>
                     <div class="feature-card">
-                        <h3>Brevity</h3>
-                        <p>Brevity delivers daily AI-curated cybersecurity briefings—concise, high-signal updates crafted for professionals who can't afford to miss what matters.</p>
+                        <div class="feature-card-content">
+                            <h3>Brevity</h3>
+                            <p>Brevity delivers daily AI-curated cybersecurity briefings—concise, high-signal updates crafted for professionals who can't afford to miss what matters.</p>
+                        </div>
                         <a href="brevity/" class="feature-btn">Subscribe Now >></a>
                     </div>
                     <div class="feature-card">
-                        <h3>Certmind</h3>
-                        <p>Currently in development</p>
+                        <div class="feature-card-content">
+                            <h3>Certmind</h3>
+                            <p>Currently in development</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -63,16 +145,22 @@
                 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3>OSINT (Open Source Intelligence)</h3>
-                        <p>Master the skills to collect and assess open-source data for identifying potential threats and suspicious activity.</p>
+                        <div class="feature-card-content">
+                            <h3>OSINT (Open Source Intelligence)</h3>
+                            <p>Master the skills to collect and assess open-source data for identifying potential threats and suspicious activity.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
-                        <h3>Malware Analysis</h3>
-                        <p>Analyze real-world malware in a guided sandbox environment and explore AI-assisted techniques for deeper, faster insight.</p>
+                        <div class="feature-card-content">
+                            <h3>Malware Analysis</h3>
+                            <p>Analyze real-world malware in a guided sandbox environment and explore AI-assisted techniques for deeper, faster insight.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
-                        <h3>Threat Intelligence</h3>
-                        <p>Learn how to interpret threat data, map adversary behaviors, and produce intelligence that supports proactive defense.</p>
+                        <div class="feature-card-content">
+                            <h3>Threat Intelligence</h3>
+                            <p>Learn how to interpret threat data, map adversary behaviors, and produce intelligence that supports proactive defense.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -95,16 +183,22 @@
                 
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3>Research That Matters</h3>
-                        <p>We share our findings through papers and conferences to help make cybersecurity smarter, safer, and more practical for everyone.</p>
+                        <div class="feature-card-content">
+                            <h3>Research That Matters</h3>
+                            <p>We share our findings through papers and conferences to help make cybersecurity smarter, safer, and more practical for everyone.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
-                        <h3>Skilled and Proven Team</h3>
-                        <p>Our team includes top performers from cybersecurity competitions in forensics, incident response, and ethical hacking—backed by hands-on technical expertise.</p>
+                        <div class="feature-card-content">
+                            <h3>Skilled and Proven Team</h3>
+                            <p>Our team includes top performers from cybersecurity competitions in forensics, incident response, and ethical hacking—backed by hands-on technical expertise.</p>
+                        </div>
                     </div>
                     <div class="feature-card">
-                        <h3>Understanding the Attacker</h3>
-                        <p>By thinking like attackers, we build better defenses. Our insights come from deep technical analysis and real security challenges.</p>
+                        <div class="feature-card-content">
+                            <h3>Understanding the Attacker</h3>
+                            <p>By thinking like attackers, we build better defenses. Our insights come from deep technical analysis and real security challenges.</p>
+                        </div>
                     </div>
                 </div>
             </section>
