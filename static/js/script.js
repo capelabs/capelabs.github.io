@@ -1,7 +1,6 @@
-// ==================== BREVITY PAGE FUNCTIONS ====================
-// 기존 script.js 파일의 맨 아래에 추가할 코드
+// ==================== GLOBAL FUNCTIONS ====================
 
-// Mobile menu toggle function for Brevity page
+// Mobile menu toggle function
 function toggleMobileMenu() {
     const navMenu = document.getElementById('navMenu');
     const mobileToggle = document.querySelector('.mobile-toggle');
@@ -35,6 +34,135 @@ function toggleMobileMenu() {
 function isBrevityPage() {
     return document.body.classList.contains('brevity-page');
 }
+
+// ==================== EMAIL CONFIRMATION FUNCTIONS ====================
+
+// Global variables for email confirmation
+let confirmedEmail = '';
+
+// Show email confirmation modal
+function showEmailConfirmation(email) {
+    if (!isBrevityPage()) return;
+    
+    const overlay = document.getElementById('confirmationOverlay');
+    const emailDisplay = document.getElementById('confirmationEmail');
+    
+    if (overlay && emailDisplay) {
+        emailDisplay.textContent = email;
+        confirmedEmail = email;
+        overlay.classList.add('show');
+    }
+}
+
+// Confirm email and proceed with subscription
+function confirmEmail() {
+    if (!isBrevityPage()) return;
+    
+    const overlay = document.getElementById('confirmationOverlay');
+    if (overlay) {
+        overlay.classList.remove('show');
+    }
+
+    // Proceed with API request
+    proceedWithSubscription(confirmedEmail);
+}
+
+// Cancel confirmation and go back to edit
+function cancelConfirmation() {
+    if (!isBrevityPage()) return;
+    
+    const overlay = document.getElementById('confirmationOverlay');
+    const emailInput = document.getElementById('emailInput');
+    
+    if (overlay) {
+        overlay.classList.remove('show');
+    }
+    
+    if (emailInput) {
+        emailInput.focus();
+        emailInput.select();
+    }
+}
+
+// Proceed with actual subscription
+function proceedWithSubscription(email) {
+    if (!isBrevityPage()) return;
+    
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    
+    // Button loading state
+    if (subscribeBtn) {
+        subscribeBtn.disabled = true;
+        const originalText = subscribeBtn.textContent;
+        subscribeBtn.textContent = 'Processing...';
+    }
+
+    // API request
+    const apiUrl = 'https://api.thecapelabs.com/brevity/v1.0/0c492e35-d082-41ef-9bf7-ae20f9b61151';
+    
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email
+        })
+    })
+    .then(response => {
+        if (response.status === 200) {
+            // Success message with email (옵션 D)
+            showBrevityAlert('success', 'Success', `${email} registered successfully. Daily briefings start within 24 hours. Welcome to Brevity! 🎉`);
+            
+            // Reset form
+            resetBrevityForm();
+        } else {
+            throw new Error(`Server responded with status ${response.status}`);
+        }
+    })
+    .catch(error => {
+        console.error('Subscription error:', error);
+        
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            showBrevityAlert('error', 'Network Error', 'Unable to connect to the server. Please check your internet connection and try again.');
+        } else if (error.message.includes('status 4')) {
+            showBrevityAlert('error', 'Request Error', 'Invalid request. Please verify your email address and try again.');
+        } else if (error.message.includes('status 5')) {
+            showBrevityAlert('error', 'Server Error', 'Server is temporarily unavailable. Please try again in a few minutes.');
+        } else {
+            showBrevityAlert('error', 'Subscription Error', 'An unexpected error occurred. Please try again later.');
+        }
+    })
+    .finally(() => {
+        // Reset button state
+        if (subscribeBtn) {
+            subscribeBtn.disabled = false;
+            subscribeBtn.textContent = 'Subscribe';
+            checkFormValidity();
+        }
+    });
+}
+
+// Reset form after successful subscription
+function resetBrevityForm() {
+    if (!isBrevityPage()) return;
+    
+    const emailInput = document.getElementById('emailInput');
+    const tosCheckbox = document.getElementById('tosCheckbox');
+    const ppCheckbox = document.getElementById('ppCheckbox');
+    
+    if (emailInput) {
+        emailInput.value = '';
+        emailInput.style.borderColor = 'var(--border-primary)';
+        emailInput.style.boxShadow = 'none';
+    }
+    if (tosCheckbox) tosCheckbox.checked = false;
+    if (ppCheckbox) ppCheckbox.checked = false;
+    
+    checkFormValidity();
+}
+
+// ==================== BREVITY PAGE FUNCTIONS ====================
 
 // Brevity Matrix-like background effect
 function createBrevityMatrixBackground() {
@@ -131,6 +259,26 @@ function closeAlert() {
     closeBrevityAlert();
 }
 
+// Check form validity
+function checkFormValidity() {
+    if (!isBrevityPage()) return;
+    
+    const emailInput = document.getElementById('emailInput');
+    const tosCheckbox = document.getElementById('tosCheckbox');
+    const ppCheckbox = document.getElementById('ppCheckbox');
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    
+    if (!emailInput || !tosCheckbox || !ppCheckbox || !subscribeBtn) return;
+    
+    const email = emailInput.value.trim();
+    const isEmailValid = email && isValidBrevityEmail(email);
+    const isTosChecked = tosCheckbox.checked;
+    const isPpChecked = ppCheckbox.checked;
+    
+    const isFormValid = isEmailValid && isTosChecked && isPpChecked;
+    subscribeBtn.disabled = !isFormValid;
+}
+
 // Brevity 페이지 초기화 함수
 function initBrevityPage() {
     if (!isBrevityPage()) return;
@@ -159,6 +307,18 @@ function initBrevityPage() {
             }
             body.style.overflow = ''; // 스크롤 복원
         }
+
+        // Close modals on outside click
+        const confirmationOverlay = document.getElementById('confirmationOverlay');
+        const alertOverlay = document.getElementById('alertOverlay');
+        
+        if (e.target === confirmationOverlay) {
+            cancelConfirmation();
+        }
+        
+        if (e.target === alertOverlay) {
+            closeBrevityAlert();
+        }
     });
 
     // 네비게이션 링크 클릭 시 모바일 메뉴 닫기
@@ -183,44 +343,21 @@ function initBrevityPage() {
         });
     });
 
-    // 버튼 활성화 상태 체크 함수
-    function checkFormValidity() {
-        const emailInput = document.getElementById('emailInput');
-        const tosCheckbox = document.getElementById('tosCheckbox');
-        const ppCheckbox = document.getElementById('ppCheckbox');
-        const subscribeBtn = document.getElementById('subscribeBtn');
-        
-        if (!emailInput || !tosCheckbox || !ppCheckbox || !subscribeBtn) return;
-        
-        const email = emailInput.value.trim();
-        const isEmailValid = email && isValidBrevityEmail(email);
-        const isTosChecked = tosCheckbox.checked;
-        const isPpChecked = ppCheckbox.checked;
-        
-        // 모든 조건이 만족되면 버튼 활성화
-        const isFormValid = isEmailValid && isTosChecked && isPpChecked;
-        
-        subscribeBtn.disabled = !isFormValid;
-    }
-
-    // 알림 외부 클릭 시 닫기
-    const alertOverlay = document.getElementById('alertOverlay');
-    if (alertOverlay) {
-        alertOverlay.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeBrevityAlert();
-            }
-        });
-    }
-
-    // ESC 키로 알림 닫기
+    // ESC key to close modals
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && isBrevityPage()) {
-            closeBrevityAlert();
+            const confirmationOverlay = document.getElementById('confirmationOverlay');
+            const alertOverlay = document.getElementById('alertOverlay');
+            
+            if (confirmationOverlay && confirmationOverlay.classList.contains('show')) {
+                cancelConfirmation();
+            } else if (alertOverlay && alertOverlay.classList.contains('show')) {
+                closeBrevityAlert();
+            }
         }
     });
 
-    // 구독 폼 제출 처리
+    // 구독 폼 제출 처리 (수정된 부분)
     const subscriptionForm = document.getElementById('subscriptionForm');
     if (subscriptionForm) {
         subscriptionForm.addEventListener('submit', function(e) {
@@ -229,9 +366,8 @@ function initBrevityPage() {
             const emailInput = document.getElementById('emailInput');
             const tosCheckbox = document.getElementById('tosCheckbox');
             const ppCheckbox = document.getElementById('ppCheckbox');
-            const subscribeBtn = document.getElementById('subscribeBtn');
             
-            if (!emailInput || !tosCheckbox || !ppCheckbox || !subscribeBtn) return;
+            if (!emailInput || !tosCheckbox || !ppCheckbox) return;
             
             const email = emailInput.value.trim();
 
@@ -260,62 +396,8 @@ function initBrevityPage() {
                 return;
             }
 
-            // 버튼 비활성화 및 로딩 상태
-            subscribeBtn.disabled = true;
-            const originalText = subscribeBtn.textContent;
-            subscribeBtn.textContent = 'Processing...';
-
-            // API 요청
-            const apiUrl = 'https://api.thecapelabs.com/brevity/v1.0/0c492e35-d082-41ef-9bf7-ae20f9b61151';
-            
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email: email
-                })
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    // 성공적인 구독
-                    showBrevityAlert('success', 'Subscription Confirmed', 'Welcome to Brevity intelligence network. Daily briefings will commence within 24 hours.');
-                    
-                    // 폼 초기화
-                    emailInput.value = '';
-                    tosCheckbox.checked = false;
-                    ppCheckbox.checked = false;
-                    checkFormValidity();
-                } else {
-                    // HTTP 상태 코드가 200이 아닌 경우
-                    throw new Error(`Server responded with status ${response.status}`);
-                }
-            })
-            .catch(error => {
-                console.error('Subscription error:', error);
-                
-                // 네트워크 오류 또는 기타 오류 처리
-                if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                    // 네트워크 연결 오류
-                    showBrevityAlert('error', 'Network Error', 'Unable to connect to the server. Please check your internet connection and try again.');
-                } else if (error.message.includes('status 4')) {
-                    // 4xx 클라이언트 오류
-                    showBrevityAlert('error', 'Request Error', 'Invalid request. Please verify your email address and try again.');
-                } else if (error.message.includes('status 5')) {
-                    // 5xx 서버 오류
-                    showBrevityAlert('error', 'Server Error', 'Server is temporarily unavailable. Please try again in a few minutes.');
-                } else {
-                    // 기타 오류
-                    showBrevityAlert('error', 'Subscription Error', 'An unexpected error occurred. Please try again later.');
-                }
-            })
-            .finally(() => {
-                // 버튼 상태 복원
-                subscribeBtn.disabled = false;
-                subscribeBtn.textContent = originalText;
-                checkFormValidity(); // 폼 상태에 따라 버튼 활성화 여부 재확인
-            });
+            // Show confirmation modal instead of direct submission
+            showEmailConfirmation(email);
         });
     }
 
@@ -431,11 +513,13 @@ function initBrevityPage() {
     `);
 }
 
-// 기존 DOMContentLoaded 이벤트 리스너에 추가하거나, 
-// 기존 리스너가 없다면 이 코드를 추가
+// ==================== MAIN INITIALIZATION ====================
+
+// 기존 DOMContentLoaded 이벤트 리스너
 document.addEventListener('DOMContentLoaded', function() {
-    // 기존 CapeLabs 메인 페이지 초기화 코드들...
-    
     // Brevity 페이지 초기화 (Brevity 페이지일 때만 실행됨)
     initBrevityPage();
+    
+    // 다른 전역 초기화 작업들이 여기에 올 수 있습니다
+    console.log('CapeLabs website initialized');
 });

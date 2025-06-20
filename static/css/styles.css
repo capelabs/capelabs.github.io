@@ -349,6 +349,10 @@ body {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
 }
 
 .feature-card::before {
@@ -373,6 +377,10 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
+.feature-card-content {
+    flex-grow: 1;
+}
+
 .feature-card h3 {
     margin-bottom: 1rem;
     font-size: 1.3rem;
@@ -384,6 +392,7 @@ body {
 .feature-card p {
     color: var(--text-muted);
     font-size: 0.95rem;
+    margin-bottom: 0;
 }
 
 /* Feature Card Ghost Button */
@@ -403,8 +412,8 @@ body {
     transition: all 0.3s ease;
     position: relative;
     border-bottom: 1px solid transparent;
-    float: right; /* 우측 배치 */
-    clear: both; /* 다른 float 요소들과 겹치지 않도록 */
+    align-self: flex-end;
+    flex-shrink: 0;
 }
 
 .feature-btn:hover {
@@ -416,6 +425,11 @@ body {
 
 .feature-btn:active {
     transform: translateY(0);
+}
+
+/* Ensure cards without buttons have consistent spacing */
+.feature-card:not(:has(.feature-btn)) {
+    min-height: auto;
 }
 
 /* Code Block */
@@ -675,6 +689,15 @@ body {
     .main-content {
         position: relative;
         z-index: 1;
+    }
+
+    .feature-card {
+        min-height: auto; /* Remove fixed height on mobile for better flow */
+    }
+    
+    .feature-btn {
+        align-self: flex-end; /* Keep right alignment on mobile */
+        margin-top: 1rem;
     }
 }
 
@@ -1005,6 +1028,126 @@ body {
     z-index: 1;
 }
 
+/* ==================== EMAIL CONFIRMATION MODAL STYLES ==================== */
+/* Email confirmation modal styles */
+.brevity-page .confirmation-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1005;
+    justify-content: center;
+    align-items: center;
+}
+
+.brevity-page .confirmation-modal {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    padding: 3rem 2.5rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: all 0.3s ease;
+}
+
+.brevity-page .confirmation-overlay.show {
+    display: flex;
+}
+
+.brevity-page .confirmation-overlay.show .confirmation-modal {
+    transform: scale(1);
+}
+
+.brevity-page .confirmation-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-red), var(--primary-blue), var(--accent-cyan));
+}
+
+.brevity-page .confirmation-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.brevity-page .confirmation-message {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.brevity-page .confirmation-email {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    font-family: 'Courier New', monospace;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-primary);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    word-break: break-all;
+}
+
+.brevity-page .confirmation-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.brevity-page .confirm-btn, 
+.brevity-page .cancel-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid;
+    min-width: 120px;
+}
+
+.brevity-page .confirm-btn {
+    background: var(--primary-blue);
+    color: var(--bg-primary);
+    border-color: var(--primary-blue);
+}
+
+.brevity-page .confirm-btn:hover {
+    background: var(--primary-blue-hover);
+    box-shadow: 0 0 15px var(--focus-glow);
+    transform: translateY(-1px);
+}
+
+.brevity-page .cancel-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border-color: var(--border-primary);
+}
+
+.brevity-page .cancel-btn:hover {
+    background: var(--hover-overlay);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}
+
 /* Brevity custom alert modal */
 .brevity-page .alert-overlay {
     display: none;
@@ -1137,6 +1280,21 @@ body {
     .brevity-page .alert-modal {
         padding: 2rem 1.5rem;
     }
+
+    .brevity-page .confirmation-modal {
+        padding: 2rem 1.5rem;
+    }
+
+    .brevity-page .confirmation-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .brevity-page .confirm-btn, 
+    .brevity-page .cancel-btn {
+        width: 100%;
+        max-width: 200px;
+    }
     
     /* Brevity 페이지의 모바일 네비게이션 z-index 수정 */
     .brevity-page .nav-menu {
@@ -1177,6 +1335,11 @@ body {
     .brevity-page .alert-overlay {
         z-index: 1004 !important;
     }
+
+    /* 확인 모달도 모든 것보다 위에 */
+    .brevity-page .confirmation-overlay {
+        z-index: 1005 !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1199,9 +1362,4 @@ body {
     .brevity-page .hero-subtitle {
         font-size: 0.9rem;
     }
-}
-
-/* Headless 페이지용 클래스 추가 */
-.headless-page .main-content {
-    margin-top: 0;
 }

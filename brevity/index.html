@@ -80,6 +80,19 @@
     <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
 
+    <!-- Email Confirmation Modal -->
+    <div class="confirmation-overlay" id="confirmationOverlay">
+        <div class="confirmation-modal">
+            <h3 class="confirmation-title">Almost There!</h3>
+            <p class="confirmation-message">We'll send daily briefings to this email address:</p>
+            <div class="confirmation-email" id="confirmationEmail"></div>
+            <div class="confirmation-buttons">
+                <button class="confirm-btn" onclick="confirmEmail()">That's Correct!</button>
+                <button class="cancel-btn" onclick="cancelConfirmation()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Custom Alert Modal -->
     <div class="alert-overlay" id="alertOverlay">
         <div class="alert-modal">
