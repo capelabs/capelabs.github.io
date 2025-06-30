@@ -60,10 +60,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Get ID from URL
             const id = getUrlParameter('id');
-            
-            if (!id) {
-                alert('Invalid unsubscribe link. No ID provided.');
-                updateStatus('Invalid unsubscribe link. Please check your email for the correct link.');
+            if (!id)  {
+                window.location.href = '/';
                 return;
             }
             
