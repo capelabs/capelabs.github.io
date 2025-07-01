@@ -112,7 +112,7 @@ function proceedWithSubscription(email) {
     .then(response => {
         if (response.status === 200) {
             // Success message with email (옵션 D)
-            showBrevityAlert('success', 'Success', `${email} registered successfully. Daily briefings start within 24 hours. Welcome to Brevity! 🎉`);
+            showBrevityAlert('success', 'Success', `${email} registered successfully. Check your email for a welcome message. Daily newsletter start within 24 hours. Welcome to Brevity! 🎉`);
             
             // Reset form
             resetBrevityForm();
